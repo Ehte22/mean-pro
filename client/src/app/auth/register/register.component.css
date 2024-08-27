@@ -1,0 +1,32 @@
+.btn-green {
+    background-color: #00ad5f;
+}
+
+.btn-hover:hover {
+    background-color: #00a55b;
+}
+
+.letter-spacing-xs {
+    letter-spacing: 4 px;
+}
+
+.inp-placeholder::placeholder {
+    font-weight: 600;
+}
+
+.inp-focus:focus {
+    outline: none;
+    border: 2px solid #00ad5f;
+}
+
+.link-deco {
+    color: #00ad5f;
+}
+
+.link-margin {
+    margin-top: 150px;
+}
+
+.pad-4 {
+    padding: 6px 0;
+}

@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="card shadow col-lg-5 mt-5 mx-auto">
+        <div *ngIf="userDetail" class="card-body text-center">
+            <div class="card-profile-stats">
+                <img *ngIf="userDetail" [src]="'http://localhost:5000/public/' + userDetail.profile" alt="">
+            </div>
+
+            <h3>{{userDetail.fname | titlecase}} {{ userDetail.lname | titlecase}}</h3>
+            <h5><i class="fa-solid fa-envelope email"></i>&nbsp;:- <span>{{userDetail.email}}</span> </h5>
+            <h5><i class="fa-solid fa-mobile"></i>&nbsp;:- <span>{{userDetail.phone}}</span> </h5>
+            <h5><i class="fa-solid fa-person"></i>&nbsp;:- <span>{{userDetail.gender | titlecase}}</span> </h5>
+            <h5><i class="fa-solid fa-location-pin location"></i>&nbsp;:- <span>{{userDetail.location |
+                    titlecase}}</span> </h5>
+            <h5>Status&nbsp;:- <span>{{userDetail.status | titlecase}}</span> </h5>
+            <h5><i class="fa-solid fa-calendar-days calendar"></i>&nbsp;Date Created&nbsp;:-
+                <span>{{userDetail.createdAt | date}}</span>
+            </h5>
+            <h5> <i class="fa-solid fa-calendar-days calendar"></i>&nbsp;Date Updated&nbsp;:-
+                <span>{{userDetail.updatedAt | date}}</span>
+            </h5>
+        </div>
+    </div>
+</div>

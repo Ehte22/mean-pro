@@ -1,0 +1,158 @@
+<div class="container mt-5">
+    <div class="d-flex justify-content-between">
+        <div class="search-container">
+            <input type="search" (input)="handleChange($event)" class="form-control me-3" placeholder="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <button type="button" [routerLink]="['register']" class="btn btn-primary"><i class="fa-solid fa-plus"></i>&nbsp;
+            Add User
+        </button>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-lg-4 col-sm-6">
+            <h3>Filter By Gender</h3>
+            <div class="d-flex gap-3">
+                <div>
+                    <input (input)="handleChange($event)" type="radio" id="allGender" name="gen" value="all"
+                        class="form-check-input me-2" checked>
+                    <label for="allGender" class="form-label">All</label>
+                </div>
+                <div>
+                    <input (input)="handleChange($event)" type="radio" id="male" name="gen" value="male"
+                        class="form-check-input me-2">
+                    <label for="male" class="form-label">Male</label>
+                </div>
+                <div>
+                    <input (input)="handleChange($event)" type="radio" id="female" name="gen" value="female"
+                        class="form-check-input me-2">
+                    <label for="female" class="form-label">Female</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+            <h3>Sort By Date</h3>
+            <div class="dropdown">
+                <button class=" dropdown-toggle dropdown_btn no-arrow fs-4" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown">
+                    <i class="fa-solid fa-sort text-primary"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item" (click)="sortByDate('asc')">Ascending</li>
+                    <li class="dropdown-item" (click)="sortByDate('desc')">Descending</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6">
+            <h3>Filter By Status</h3>
+            <div class="d-flex gap-3">
+                <div>
+                    <input (input)="handleChange($event)" type="radio" id="all" name="status" value="all"
+                        class="form-check-input me-2" checked>
+                    <label for="all" class="form-label">All</label>
+                </div>
+                <div>
+                    <input (input)="handleChange($event)" type="radio" id="active" name="status" value="active"
+                        class="form-check-input me-2">
+                    <label for="active" class="form-label">Active</label>
+                </div>
+                <div>
+                    <input (input)="handleChange($event)" type="radio" id="inactive" name="status" value="inactive"
+                        class="form-check-input me-2">
+                    <label for="inactive" class="form-label">InActive</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-4">
+        <div class="col">
+            <div class="card shadow table-responsive">
+                <table class="table ">
+                    <thead>
+                        <tr class="table-dark">
+                            <th>#</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Gender</th>
+                            <th>Status</th>
+                            <th>Profile</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of allUsers; let i = index" style="height: 50px">
+                            <td>{{i + 1}}</td>
+                            <td>{{item.fname}} {{item.lname}}</td>
+                            <td>{{item.email}}</td>
+                            <td>{{item.gender === "male" ? "M" : "F"}}</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle dropdown_btn no-arrow" id="dropdownMenuButton"
+                                        data-bs-toggle="dropdown">
+                                        <span class="badge" style="font-size: 15px;"
+                                            [ngClass]="{ 'bg-primary': item.status === 'active', 'bg-danger': item.status !== 'active'}">
+                                            {{ item.status }}
+                                            <i class="fas fa-angle-down"></i>
+                                        </span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-item" (click)="updateStatus(item, 'active')">Active</li>
+                                        <li class="dropdown-item" (click)="updateStatus(item, 'inactive')">InActive</li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>
+                                <img class="profile" [src]="imgUrl + item.profile" alt="">
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class=" dropdown-toggle dropdown_btn no-arrow" type="button"
+                                        id="dropdownMenuButton1" data-bs-toggle="dropdown">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-item">
+                                            <button class="border-0 bg-transparent" (click)="getUserDetails(item)">
+                                                <i class="fa-solid fa-eye text-success"></i>
+                                                <span class="ms-2">View</span>
+                                            </button>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <button class="border-0 bg-transparent" (click)="editUser(item)">
+                                                <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                                <span class="ms-2">Edit</span>
+                                            </button>
+                                        </li>
+                                        <li class="dropdown-item">
+                                            <button *ngIf="item._id" (click)="deleteUser(item._id)"
+                                                class="border-0 bg-transparent">
+                                                <i class="fa-solid fa-trash text-danger"></i>
+                                                <span class="ms-2">Delete</span>
+                                            </button>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="allUsers.length" class="pagination justify-content-end me-5">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <button class="page-link" (click)="previousPage()">Previous</button>
+                        </li>
+                        <li class="page-item" *ngFor="let page of pages; let i = index">
+                            <button class="page-link" (click)="goToPage(page)"
+                                [ngClass]="{'bg-primary text-light': page === currentPage}">{{ page }}</button>
+                        </li>
+                        <li class="page-item">
+                            <button class="page-link" (click)="nextPage()">Next</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,108 @@
+<div class="container">
+    <h2 class="text-center mt-5">Register Your Details</h2>
+    <div class="card shadow mt-4 p-3">
+        <div class="profile text-center">
+            <img [src]="profileImageUrl || 'https://img.freepik.com/premium-vector/brunette-man-avatar-portrait-young-guy-vector-illustration-face_217290-1035.jpg?w=740'"
+                alt="">
+        </div>
+
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <div class="row my-3">
+                <div class="col-sm-6">
+                    <label for="fname" class="form-label">First Name</label>
+                    <input [ngClass]="validateFields('fname')" formControlName="fname" type="text" class="form-control"
+                        placeholder="Enter First Name">
+                    <small *ngIf="userForm.get('fname')?.errors?.['required']" class="invalid-feedback">
+                        *Field first name is required
+                    </small>
+                    <small *ngIf="userForm.get('fname')?.errors?.['noSpaceAllowed']" class="invalid-feedback">
+                        *No space allowed
+                    </small>
+                </div>
+                <div class="col-sm-6">
+                    <label for="lname" class="form-label">Last Name</label>
+                    <input [ngClass]="validateFields('lname')" formControlName="lname" type="text" class="form-control"
+                        placeholder="Enter Last Name">
+                    <small *ngIf="userForm.get('lname')?.errors?.['required']" class="invalid-feedback">
+                        *Field last name is required
+                    </small>
+                    <small *ngIf="userForm.get('lname')?.errors?.['noSpaceAllowed']" class="invalid-feedback">
+                        *No space allowed
+                    </small>
+                </div>
+            </div>
+
+            <div class="row my-3">
+                <div class="col-sm-6">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input [ngClass]="validateFields('email')" formControlName="email" type="text" class="form-control"
+                        placeholder="Enter Email">
+                    <small *ngIf="userForm.get('email')?.errors?.['required']" class="invalid-feedback">
+                        *Field email is required
+                    </small>
+                    <small *ngIf="userForm.get('email')?.errors?.['pattern']" class="invalid-feedback">
+                        *Please enter a valid email
+                    </small>
+                </div>
+                <div class="col-sm-6">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input [ngClass]="validateFields('phone')" formControlName="phone" type="number"
+                        class="form-control" placeholder="Enter Phone Number">
+                    <small *ngIf="userForm.get('phone')?.errors?.['required']" class="invalid-feedback">
+                        *Field phone number is required
+                    </small>
+                    <small *ngIf="userForm.get('phone')?.errors?.['pattern']" class="invalid-feedback">
+                        *Please enter a valid mobile phone
+                    </small>
+                </div>
+            </div>
+
+            <div class="row my-3">
+                <div class="col-sm-6">
+                    <label class="form-label">Select Your Gender</label>
+                    <div *ngFor="let item of genders">
+                        <input [ngClass]="validateFields('gender')" type="radio" formControlName="gender"
+                            [value]="item.value" [id]="item.id" class="form-check-input">
+                        <label [for]="item.id" class="form-label ms-2">{{item.display}}</label>
+                        <small *ngIf="userForm.get('gender')?.errors?.['required']" class="invalid-feedback">
+                            *Field gender is required
+                        </small>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="status" class="form-label">Select Your Status</label>
+                    <select [ngClass]="validateFields('status')" formControlName="status" id="status"
+                        class="form-select">
+                        <option hidden value="">Select...</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">InActive</option>
+                    </select>
+                    <small *ngIf="userForm.get('status')?.errors?.['required']" class="invalid-feedback">
+                        *Field status is required
+                    </small>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="profile" class="form-label">Select Your Profile</label>
+                    <input [ngClass]="validateFields('profile')" (change)="handleChange($event)"
+                        formControlName="profile" type="file" class="form-control">
+                    <small *ngIf="userForm.get('profile')?.errors?.['required']" class="invalid-feedback">
+                        *Field profile is required
+                    </small>
+                </div>
+                <div class="col-sm-6">
+                    <label for="location" class="form-label">Enter Your Location</label>
+                    <input [ngClass]="validateFields('location')" formControlName="location" type="text"
+                        class="form-control" placeholder="Enter Your Location">
+                    <small *ngIf="userForm.get('location')?.errors?.['required']" class="invalid-feedback">
+                        *Field location is required
+                    </small>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mt-3">Submit</button>
+        </form>
+    </div>
+</div>
